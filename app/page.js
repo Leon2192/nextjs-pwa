@@ -3,38 +3,44 @@ import Image from 'next/image'
 import { useEffect } from 'react'
 export default function Home() {
 
+  const [showInstallPrompt, setShowInstallPrompt] = useState(false);
+
   useEffect(() => {
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('/sw.js');
     }
+
     window.addEventListener('beforeinstallprompt', (event) => {
       event.preventDefault();
+      setShowInstallPrompt(true);
 
-      // Usa 'let' en lugar de 'const' para poder reasignar la variable
-      let deferredPrompt = event;
-
-      const installButton = document.getElementById('install-button');
-
-      if (installButton) {
-        installButton.style.display = 'block';
-        installButton.addEventListener('click', () => {
-          deferredPrompt.prompt();
-          deferredPrompt.userChoice.then((choiceResult) => {
-            if (choiceResult.outcome === 'accepted') {
-              console.log('Usuario aceptó la instalación');
-            } else {
-              console.log('Usuario rechazó la instalación');
-            }
-            deferredPrompt = null; // No es necesario, pero puedes hacerlo para evitar futuros usos accidentales
-          });
-        });
-      }
+      const deferredPrompt = event;
+      // Aquí puedes guardar el deferredPrompt para usarlo más tarde cuando el usuario interactúe con el banner.
     });
-
   }, []);
+
+  const handleInstallClick = () => {
+    if (deferredPrompt) {
+      deferredPrompt.prompt();
+      deferredPrompt.userChoice.then((choiceResult) => {
+        if (choiceResult.outcome === 'accepted') {
+          console.log('Usuario aceptó la instalación');
+        } else {
+          console.log('Usuario rechazó la instalación');
+        }
+      });
+    }
+    setShowInstallPrompt(false);
+  };
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
+      {showInstallPrompt && (
+        <div className="fixed bottom-0 left-0 w-full bg-white p-4 text-center">
+          <p>¡Instala esta app en tu dispositivo!</p>
+          <button onClick={handleInstallClick}>Instalar</button>
+        </div>
+      )}
       <div id="install-button" style={{ display: 'none' }}></div>
       <div className="z-10 max-w-5xl w-full items-center justify-between font-mono text-sm lg:flex">
         <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
