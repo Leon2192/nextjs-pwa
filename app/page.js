@@ -7,19 +7,15 @@ export default function Home() {
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('/service-worker.js');
 
-      // Evento para mostrar la notificación de instalación
       window.addEventListener('beforeinstallprompt', (event) => {
-        // Evitar que se muestre automáticamente la notificación de instalación
         event.preventDefault();
-
-        // Mostrar la notificación cuando el usuario interactúe con tu UI
         const installButton = document.getElementById('install-button');
 
-        installButton.addEventListener('click', () => {
-          // Mostrar la notificación
-          event.prompt();
+        // Mostrar el botón de instalación automáticamente
+        installButton.style.display = 'block';
 
-          // Esperar a que el usuario responda
+        installButton.addEventListener('click', () => {
+          event.prompt();
           event.userChoice.then((choiceResult) => {
             if (choiceResult.outcome === 'accepted') {
               console.log('El usuario aceptó instalar la PWA');
@@ -28,13 +24,9 @@ export default function Home() {
             }
           });
         });
-
-        installButton.style.display = 'block'; // Mostrar el botón de instalación
       });
     }
   }, []);
-
-
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
       <div className="z-10 max-w-5xl w-full items-center justify-between font-mono text-sm lg:flex">
