@@ -22,27 +22,27 @@ if (!self.define) {
   const singleRequire = (uri, parentUri) => {
     uri = new URL(uri + ".js", parentUri).href;
     return registry[uri] || (
-      
-        new Promise(resolve => {
-          if ("document" in self) {
-            const script = document.createElement("script");
-            script.src = uri;
-            script.onload = resolve;
-            document.head.appendChild(script);
-          } else {
-            nextDefineUri = uri;
-            importScripts(uri);
-            resolve();
-          }
-        })
-      
-      .then(() => {
-        let promise = registry[uri];
-        if (!promise) {
-          throw new Error(`Module ${uri} didn’t register its module`);
+
+      new Promise(resolve => {
+        if ("document" in self) {
+          const script = document.createElement("script");
+          script.src = uri;
+          script.onload = resolve;
+          document.head.appendChild(script);
+        } else {
+          nextDefineUri = uri;
+          importScripts(uri);
+          resolve();
         }
-        return promise;
       })
+
+        .then(() => {
+          let promise = registry[uri];
+          if (!promise) {
+            throw new Error(`Module ${uri} didn’t register its module`);
+          }
+          return promise;
+        })
     );
   };
 
@@ -67,7 +67,8 @@ if (!self.define) {
     });
   };
 }
-define(['./workbox-8f0e986c'], (function (workbox) { 'use strict';
+define(['./workbox-8f0e986c'], (function (workbox) {
+  'use strict';
 
   importScripts();
   self.skipWaiting();
@@ -99,3 +100,25 @@ define(['./workbox-8f0e986c'], (function (workbox) { 'use strict';
 
 }));
 //# sourceMappingURL=sw.js.map
+
+self.addEventListener('push', (event) => {
+  const options = {
+    body: event.data.text(),
+    icon: '/vercel-192x192.png',
+    badge: '/vercel-192x192.png',
+    actions: [{ action: 'open', title: 'Abrir App' }]
+  };
+
+  event.waitUntil(
+    self.registration.showNotification('Título de la Notificación', options)
+  );
+});
+
+self.addEventListener('notificationclick', (event) => {
+  event.notification.close();
+
+  if (event.action === 'open') {
+    // Aquí puedes redirigir a la página de tu PWA
+    self.clients.openWindow('/');
+  }
+});
