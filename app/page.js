@@ -6,7 +6,7 @@ export default function Home() {
 
   useEffect(() => {
     if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('/service-worker.js');
+      navigator.serviceWorker.register('/sw.js');
     }
   }, []);
 
