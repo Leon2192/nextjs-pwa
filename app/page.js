@@ -1,4 +1,5 @@
 'use client'
+import Head from 'next/head';
 import Image from 'next/image'
 import { useEffect } from 'react';
 
@@ -31,6 +32,9 @@ export default function Home() {
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
+      <Head>
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+      </Head>
       <div
         id="install-banner"
         className="fixed bottom-0 left-0 w-full bg-blue-500 text-white p-2 text-center cursor-pointer"
