@@ -39,7 +39,7 @@ self.addEventListener('push', (event) => {
     event.waitUntil(
         self.registration.showNotification(data.title, {
             body: data.message,
-            icon: '/vercel-192x192.png' // Asegúrate de que la ruta sea correcta
+            icon: '/vercel-192x192.png', // Asegúrate de que la ruta sea correcta
         })
     );
 });
@@ -50,15 +50,11 @@ self.addEventListener('notificationclick', (event) => {
         clients.matchAll({ type: 'window', includeUncontrolled: true })
             .then((clientList) => {
                 if (clientList.length > 0) {
-                    let client = clientList[0];
-                    for (let i = 0; i < clientList.length; i++) {
-                        if (clientList[i].focused) {
-                            client = clientList[i];
-                        }
-                    }
-                    return client.focus();
+                    let client = clientList.find((client) => client.focused) || clientList[0];
+                    client.focus();
+                } else {
+                    clients.openWindow('/');
                 }
-                return clients.openWindow('/');
             })
     );
 });

@@ -6,27 +6,34 @@ export default function Home() {
   useEffect(() => {
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('/service-worker.js');
-
-      window.addEventListener('beforeinstallprompt', (event) => {
-        event.preventDefault();
-        const installButton = document.getElementById('install-button');
-
-        // Mostrar el botón de instalación automáticamente
-        installButton.style.display = 'block';
-
-        installButton.addEventListener('click', () => {
-          event.prompt();
-          event.userChoice.then((choiceResult) => {
-            if (choiceResult.outcome === 'accepted') {
-              console.log('El usuario aceptó instalar la PWA');
-            } else {
-              console.log('El usuario rechazó la instalación de la PWA');
-            }
-          });
-        });
-      });
     }
   }, []);
+
+  /* useEffect(() => {
+     if ('serviceWorker' in navigator) {
+       navigator.serviceWorker.register('/service-worker.js');
+ 
+       window.addEventListener('beforeinstallprompt', (event) => {
+         event.preventDefault();
+         const installButton = document.getElementById('install-button');
+ 
+         // Mostrar el botón de instalación automáticamente
+         installButton.style.display = 'block';
+ 
+         installButton.addEventListener('click', () => {
+           event.prompt();
+           event.userChoice.then((choiceResult) => {
+             if (choiceResult.outcome === 'accepted') {
+               console.log('El usuario aceptó instalar la PWA');
+             } else {
+               console.log('El usuario rechazó la instalación de la PWA');
+             }
+           });
+         });
+       });
+     }
+   }, []);*/
+   
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
       <div className="z-10 max-w-5xl w-full items-center justify-between font-mono text-sm lg:flex">
