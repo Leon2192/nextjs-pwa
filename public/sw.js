@@ -153,3 +153,4 @@ self.addEventListener('beforeinstallprompt', (event) => {
     }
   });
 });
+

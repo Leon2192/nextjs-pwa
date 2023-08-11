@@ -2,9 +2,8 @@
 import Image from 'next/image'
 import { useEffect, useState } from 'react'
 export default function Home() {
-
   const [showInstallPrompt, setShowInstallPrompt] = useState(false);
-
+  let deferredPrompt; 
   useEffect(() => {
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('/sw.js');
@@ -13,9 +12,7 @@ export default function Home() {
     window.addEventListener('beforeinstallprompt', (event) => {
       event.preventDefault();
       setShowInstallPrompt(true);
-
-      const deferredPrompt = event;
-      // Aquí puedes guardar el deferredPrompt para usarlo más tarde cuando el usuario interactúe con el banner.
+      deferredPrompt = event; // Asignar aquí
     });
   }, []);
 
