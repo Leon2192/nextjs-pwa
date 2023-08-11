@@ -1,0 +1,21 @@
+{
+    "name": "Solution Box PWA",
+    "short_name": "Next PWA",
+    "icons": [
+        {
+            "src": "/vercel-192x192.png",
+            "type": "image/png",
+            "sizes": "192x192"
+        },
+        {
+            "src": "/vercel-512x512.png",
+            "type": "image/png",
+            "sizes": "512x512"
+        }
+    ],
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#ffffff",
+    "theme_color": "#0070f3",
+    "orientation": "portrait"
+}
