@@ -1,19 +1,18 @@
 const withPWA = require('next-pwa')({
-    dest: 'public',
-    register: true,
-    skipWaiting: true,
-});
-
-module.exports = withPWA({
+    pwa: {
+        dest: 'public',
+        register: true,
+        skipWaiting: true,
+    },
     reactStrictMode: true,
-
-    // Configuración de reescritura para el Service Worker
     async rewrites() {
         return [
             {
                 source: '/service-worker.js',
-                destination: '/service-worker.js', // Ruta desde la raíz
+                destination: '/_next/static/service-worker.js',
             },
         ];
     },
 });
+
+module.exports = withPWA();
