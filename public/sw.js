@@ -22,27 +22,27 @@ if (!self.define) {
   const singleRequire = (uri, parentUri) => {
     uri = new URL(uri + ".js", parentUri).href;
     return registry[uri] || (
-
-      new Promise(resolve => {
-        if ("document" in self) {
-          const script = document.createElement("script");
-          script.src = uri;
-          script.onload = resolve;
-          document.head.appendChild(script);
-        } else {
-          nextDefineUri = uri;
-          importScripts(uri);
-          resolve();
-        }
-      })
-
-        .then(() => {
-          let promise = registry[uri];
-          if (!promise) {
-            throw new Error(`Module ${uri} didn’t register its module`);
+      
+        new Promise(resolve => {
+          if ("document" in self) {
+            const script = document.createElement("script");
+            script.src = uri;
+            script.onload = resolve;
+            document.head.appendChild(script);
+          } else {
+            nextDefineUri = uri;
+            importScripts(uri);
+            resolve();
           }
-          return promise;
         })
+      
+      .then(() => {
+        let promise = registry[uri];
+        if (!promise) {
+          throw new Error(`Module ${uri} didn’t register its module`);
+        }
+        return promise;
+      })
     );
   };
 
@@ -67,8 +67,7 @@ if (!self.define) {
     });
   };
 }
-define(['./workbox-8f0e986c'], (function (workbox) {
-  'use strict';
+define(['./workbox-8f0e986c'], (function (workbox) { 'use strict';
 
   importScripts();
   self.skipWaiting();
@@ -100,59 +99,3 @@ define(['./workbox-8f0e986c'], (function (workbox) {
 
 }));
 //# sourceMappingURL=sw.js.map
-
-self.addEventListener('beforeinstallprompt', (event) => {
-  event.preventDefault();
-  self.clients.matchAll().then((clients) => {
-    if (clients && clients.length) {
-      clients[0].postMessage({ type: 'showInstallBanner' });
-    }
-  });
-});
-
-
-self.addEventListener('message', (event) => {
-  if (event.data && event.data.type === 'SKIP_WAITING') {
-    self.skipWaiting();
-  }
-});
-
-// Manejo de eventos de push para mostrar notificaciones
-self.addEventListener('push', event => {
-  const options = {
-    body: event.data.text(),
-    icon: `${process.env.PUBLIC_URL}/logo192.png`, // Ruta a tu icono de notificación
-  };
-
-  event.waitUntil(
-    self.registration.showNotification('Título de la Notificación', options)
-  );
-});
-
-self.addEventListener('message', (event) => {
-  if (event.data && event.data.type === 'SKIP_WAITING') {
-    self.skipWaiting();
-  }
-});
-
-// Agrega el evento beforeinstallprompt en el Service Worker
-self.addEventListener('beforeinstallprompt', (event) => {
-  // Evitar que el navegador maneje automáticamente la instalación
-  event.preventDefault();
-
-  // Enviar un mensaje a la aplicación para manejar el banner de instalación
-  self.clients.matchAll().then((clients) => {
-    if (clients && clients.length) {
-      clients[0].postMessage({ type: 'showInstallBanner' });
-      const installButton = document.createElement('button');
-      installButton.innerText = 'Instalar';
-      installButton.addEventListener('click', () => {
-        event.prompt();
-      });
-      document.body.appendChild(installButton);
-    }
-  });
-});
-
-
-
