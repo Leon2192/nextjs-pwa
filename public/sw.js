@@ -101,12 +101,27 @@ define(['./workbox-8f0e986c'], (function (workbox) {
 }));
 //# sourceMappingURL=sw.js.map
 
-self.addEventListener('push', (event) => {
+self.addEventListener('beforeinstallprompt', (event) => {
+  event.preventDefault();
+  self.clients.matchAll().then((clients) => {
+    if (clients && clients.length) {
+      clients[0].postMessage({ type: 'showInstallBanner' });
+    }
+  });
+});
+
+
+self.addEventListener('message', (event) => {
+  if (event.data && event.data.type === 'SKIP_WAITING') {
+    self.skipWaiting();
+  }
+});
+
+// Manejo de eventos de push para mostrar notificaciones
+self.addEventListener('push', event => {
   const options = {
     body: event.data.text(),
-    icon: '/vercel-192x192.png',
-    badge: '/vercel-192x192.png',
-    actions: [{ action: 'open', title: 'Abrir App' }]
+    icon: '/logosbox.png', // Ruta a tu icono de notificación
   };
 
   event.waitUntil(
@@ -114,11 +129,27 @@ self.addEventListener('push', (event) => {
   );
 });
 
-self.addEventListener('notificationclick', (event) => {
-  event.notification.close();
-
-  if (event.action === 'open') {
-    // Aquí puedes redirigir a la página de tu PWA
-    self.clients.openWindow('/');
+self.addEventListener('message', (event) => {
+  if (event.data && event.data.type === 'SKIP_WAITING') {
+    self.skipWaiting();
   }
+});
+
+// Agrega el evento beforeinstallprompt en el Service Worker
+self.addEventListener('beforeinstallprompt', (event) => {
+  // Evitar que el navegador maneje automáticamente la instalación
+  event.preventDefault();
+
+  // Enviar un mensaje a la aplicación para manejar el banner de instalación
+  self.clients.matchAll().then((clients) => {
+    if (clients && clients.length) {
+      clients[0].postMessage({ type: 'showInstallBanner' });
+      const installButton = document.createElement('button');
+      installButton.innerText = 'Instalar';
+      installButton.addEventListener('click', () => {
+        event.prompt();
+      });
+      document.body.appendChild(installButton);
+    }
+  });
 });
