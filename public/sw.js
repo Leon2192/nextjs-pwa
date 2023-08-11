@@ -155,8 +155,4 @@ self.addEventListener('beforeinstallprompt', (event) => {
 });
 
 
-importScripts();
-self.skipWaiting();
-
-
 
