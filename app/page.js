@@ -9,27 +9,28 @@ export default function Home() {
     }
     window.addEventListener('beforeinstallprompt', (event) => {
       event.preventDefault();
-      const deferredPrompt = event;
+
+      // Usa 'let' en lugar de 'const' para poder reasignar la variable
+      let deferredPrompt = event;
+
       const installButton = document.getElementById('install-button');
 
       if (installButton) {
         installButton.style.display = 'block';
         installButton.addEventListener('click', () => {
-          // Mostrar la notificación de instalación
           deferredPrompt.prompt();
-          // Esperar a que el usuario responda
           deferredPrompt.userChoice.then((choiceResult) => {
             if (choiceResult.outcome === 'accepted') {
               console.log('Usuario aceptó la instalación');
             } else {
               console.log('Usuario rechazó la instalación');
             }
-            // Limpiar la referencia al evento
-            deferredPrompt = null;
+            deferredPrompt = null; // No es necesario, pero puedes hacerlo para evitar futuros usos accidentales
           });
         });
       }
     });
+
   }, []);
 
   return (
