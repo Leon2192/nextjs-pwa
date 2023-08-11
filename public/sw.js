@@ -121,7 +121,7 @@ self.addEventListener('message', (event) => {
 self.addEventListener('push', event => {
   const options = {
     body: event.data.text(),
-    icon: '/logosbox.png', // Ruta a tu icono de notificación
+    icon: `${process.env.PUBLIC_URL}/logo192.png`, // Ruta a tu icono de notificación
   };
 
   event.waitUntil(
