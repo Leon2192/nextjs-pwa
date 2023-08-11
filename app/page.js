@@ -5,25 +5,34 @@ export default function Home() {
 
   useEffect(() => {
     if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('/service-worker.js'); // Ruta correcta
-    }
+      navigator.serviceWorker.register('/service-worker.js');
 
-    window.addEventListener('beforeinstallprompt', (event) => {
-      event.preventDefault();
-      const deferredPrompt = event;
+      // Evento para mostrar la notificación de instalación
+      window.addEventListener('beforeinstallprompt', (event) => {
+        // Evitar que se muestre automáticamente la notificación de instalación
+        event.preventDefault();
 
-      // Mostrar la notificación automáticamente
-      deferredPrompt.prompt();
-      deferredPrompt.userChoice.then((choiceResult) => {
-        if (choiceResult.outcome === 'accepted') {
-          console.log('El usuario aceptó instalar la PWA');
-        } else {
-          console.log('El usuario rechazó la instalación de la PWA');
-        }
+        // Mostrar la notificación cuando el usuario interactúe con tu UI
+        const installButton = document.getElementById('install-button');
+
+        installButton.addEventListener('click', () => {
+          // Mostrar la notificación
+          event.prompt();
+
+          // Esperar a que el usuario responda
+          event.userChoice.then((choiceResult) => {
+            if (choiceResult.outcome === 'accepted') {
+              console.log('El usuario aceptó instalar la PWA');
+            } else {
+              console.log('El usuario rechazó la instalación de la PWA');
+            }
+          });
+        });
+
+        installButton.style.display = 'block'; // Mostrar el botón de instalación
       });
-    });
+    }
   }, []);
-
 
 
   return (
