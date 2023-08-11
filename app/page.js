@@ -5,27 +5,33 @@ export default function Home() {
 
   useEffect(() => {
     if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('/sw.js'); // Ajusta la ruta según tu estructura de carpetas
+      navigator.serviceWorker.register('/service-worker.js');
+
+      // Evento para mostrar la notificación de instalación
+      window.addEventListener('beforeinstallprompt', (event) => {
+        // Evitar que se muestre automáticamente la notificación de instalación
+        event.preventDefault();
+
+        // Mostrar la notificación cuando el usuario interactúe con tu UI
+        const installButton = document.getElementById('install-button');
+
+        installButton.addEventListener('click', () => {
+          // Mostrar la notificación
+          event.prompt();
+
+          // Esperar a que el usuario responda
+          event.userChoice.then((choiceResult) => {
+            if (choiceResult.outcome === 'accepted') {
+              console.log('El usuario aceptó instalar la PWA');
+            } else {
+              console.log('El usuario rechazó la instalación de la PWA');
+            }
+          });
+        });
+
+        installButton.style.display = 'block'; // Mostrar el botón de instalación
+      });
     }
-  }, []);
-
-  useEffect(() => {
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('/sw.js');
-    }
-
-    window.addEventListener('beforeinstallprompt', (event) => {
-      // Evitar que se muestre automáticamente la notificación de instalación
-      event.preventDefault();
-
-      // Guardar el evento para usarlo cuando el usuario lo desee
-      // Por ejemplo, en un botón "Instalar"
-      const deferredPrompt = event;
-
-      // Mostrar tu propia UI para sugerir la instalación
-      // Puede ser un botón, un banner, etc.
-      // Cuando el usuario interactúa con esta UI, llama deferredPrompt.prompt()
-    });
   }, []);
 
 
