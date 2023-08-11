@@ -1,6 +1,34 @@
+'use client'
 import Image from 'next/image'
-
+import { useEffect } from 'react'
 export default function Home() {
+
+  useEffect(() => {
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/sw.js'); // Ajusta la ruta según tu estructura de carpetas
+    }
+  }, []);
+
+  useEffect(() => {
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/sw.js');
+    }
+
+    window.addEventListener('beforeinstallprompt', (event) => {
+      // Evitar que se muestre automáticamente la notificación de instalación
+      event.preventDefault();
+
+      // Guardar el evento para usarlo cuando el usuario lo desee
+      // Por ejemplo, en un botón "Instalar"
+      const deferredPrompt = event;
+
+      // Mostrar tu propia UI para sugerir la instalación
+      // Puede ser un botón, un banner, etc.
+      // Cuando el usuario interactúa con esta UI, llama deferredPrompt.prompt()
+    });
+  }, []);
+
+
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
       <div className="z-10 max-w-5xl w-full items-center justify-between font-mono text-sm lg:flex">
