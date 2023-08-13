@@ -13,6 +13,10 @@ export default function Home() {
         event.preventDefault();
         const installBanner = document.getElementById("install-banner");
 
+        setTimeout(() => {
+          installBanner.style.opacity = "1"; // Mostrar el banner después de un retraso
+        }, 3000); // Cambiar a la cantidad de milisegundos que deseas (3 segundos en este caso)
+
         installBanner.style.display = "block";
 
         installBanner.addEventListener("click", () => {
@@ -47,16 +51,19 @@ export default function Home() {
         <Landing />
         <div
           id="install-banner"
-          className="fixed bottom-0 left-0 w-full bg-blue-500 text-white p-2 text-center cursor-pointer"
+          className="fixed bottom-0 left-0 w-full bg-blue-700 text-white p-2 text-center cursor-pointer flex items-center justify-center"
           style={{
-            backgroundColor: "#0070f3",
+            backgroundColor: "#00509e", // Cambiar a un tono más oscuro
             color: "white",
             padding: "10px",
             textAlign: "center",
             cursor: "pointer",
             zIndex: "1000",
+            transition: "opacity 0.5s", // Agregar transición de opacidad
+            opacity: "0", // Inicialmente oculto
           }}
         >
+          <img src="/logosbox.png" alt="Logo SBox" className="w-6 h-6 mr-2" />
           Instalar la aplicación
         </div>
       </main>

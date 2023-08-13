@@ -1,57 +1,61 @@
 "use client";
 
-import countriesData from "../db/countries.json"; // Ruta al archivo JSON
+import countriesData from "../db/countries.json";
 
 export default function Landing() {
   const countries = countriesData.countries;
 
   return (
     <div
-      className="flex justify-center items-center min-h-screen bg-blue-900"
-      style={{ backgroundColor: "#040e25" }}
+      className="min-h-screen bg-blue-900"
+      style={{ backgroundColor: "#2f3e46" }}
     >
-      <div className="max-w-7xl mx-auto p-8 flex flex-col lg:flex-row space-y-4 lg:space-y-0 lg:space-x-8">
-        <div className="lg:flex-1 text-white">
-          <h1 className="text-4xl lg:text-5xl font-bold mb-2">
-            <span className="text-blue-300">Bienvenidos a</span>{" "}
-            <span className="text-pink-400">Solution Box</span>
-          </h1>
-          <h2 className="text-2xl lg:text-3xl font-semibold mb-4 text-blue-300">
-            Mayorista de <span className="text-teal-300">Informática</span> y{" "}
-            <span className="text-teal-300">Telecomunicaciones</span>
-          </h2>
-          <h3 className="text-base lg:text-lg text-white">
-            Somos un mayorista con origen en Argentina y una trayectoria de 20
-            años. Contamos con 11 sedes y representamos a más de 50 marcas
-            internacionales como AMD, DELL, INTEL, HUAWEI, CISCO, HP, SAMSUNG,
-            entre otras.
-          </h3>
-          <div className="flex mt-4">
-            {countries.map((country) => (
-              <div
-                key={country.name}
-                className="w-8 h-8 bg-white rounded-full flex items-center justify-center mx-1"
-              >
-                <img
-                  src={`/flags/${country.name.toLowerCase()}.png`}
-                  alt={country.name}
-                  className="w-5 h-5"
-                />
-              </div>
-            ))}
+      <div className="max-w-7xl mx-auto p-8 flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-8">
+        <div className="sm:flex-1 text-white flex justify-center items-center">
+          <div>
+            <h1 className="text-4xl sm:text-5xl font-bold mb-2">
+              <span className="text-blue-300">Bienvenidos a</span>{" "}
+              <span className="text-pink-400">Solution Box</span>
+            </h1>
+            <h2 className="text-2xl sm:text-3xl font-semibold mb-4 text-blue-300">
+              Mayorista de <span className="text-teal-300">Informática</span> y{" "}
+              <span className="text-teal-300">Telecomunicaciones</span>
+            </h2>
+            <h3 className="text-base sm:text-lg text-white">
+              Somos un mayorista con origen en Argentina y una trayectoria de 20
+              años. Contamos con 11 sedes y representamos a más de 50 marcas
+              internacionales como AMD, DELL, INTEL, HUAWEI, CISCO, HP, SAMSUNG,
+              entre otras.
+            </h3>
+            <div className="flex mt-4">
+              {countries.map((country) => (
+                <div
+                  key={country.name}
+                  className="w-8 h-8 bg-white rounded-full flex items-center justify-center mx-1"
+                >
+                  <img
+                    src={`/flags/${country.name.toLowerCase()}.png`}
+                    alt={country.name}
+                    className="w-5 h-5"
+                  />
+                </div>
+              ))}
+            </div>
           </div>
         </div>
-        <div className="lg:flex-1 flex flex-col justify-center items-center lg:items-center">
-          <div className="bg-white p-16 rounded-md text-center shadow-md lg:w-96 lg:max-w-lg">
-            <div className="w-48 h-48 lg:w-64 lg:h-64 bg-gray-300 rounded-full flex items-center justify-center mx-auto mb-4">
-              {/* Coloca aquí el enlace a tu logo */}
+        <div className="sm:flex-1 flex flex-col justify-center items-center">
+          <div className="bg-white p-6 rounded-md text-center shadow-md w-full sm:max-w-md">
+            <div className="w-32 h-32 bg-gray-300 rounded-full flex items-center justify-center mx-auto mb-4">
               <img
                 src="/logosol.jpg"
                 alt="Logo"
-                className="w-40 h-40 lg:w-56 lg:h-56 rounded-full"
+                className="w-24 h-24 rounded-full"
               />
             </div>
-            <h2 className="text-black text-lg lg:text-xl mb-2">
+            <h3 className="text-2xl text-blue-300 font-semibold mb-2">
+              ¿A qué sucursal quieres acceder?
+            </h3>
+            <h2 className="text-base sm:text-lg text-black mb-2">
               Selecciona un país:
             </h2>
             <div className="relative">
@@ -73,7 +77,10 @@ export default function Landing() {
               target="_blank"
               rel="noopener noreferrer"
             >
-              <button className="mt-4 bg-pink-400 hover:bg-pink-500 text-white px-12 py-2 rounded-md w-full">
+              <button
+                className="mt-4 bg-red-600 hover:bg-red-700 text-white px-8 py-2 rounded-md w-full"
+                style={{ backgroundColor: "#fe5f55" }}
+              >
                 Visitar sitio
               </button>
             </a>
