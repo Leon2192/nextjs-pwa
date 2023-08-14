@@ -17,7 +17,7 @@ export default function Home() {
           installBanner.style.opacity = "1"; // Mostrar el banner después de un retraso
         }, 3000); // Cambiar a la cantidad de milisegundos que deseas (3 segundos en este caso)
 
-        installBanner.style.display = "block";
+        installBanner.style.display = "flex"; // Cambiar display a "flex"
 
         installBanner.addEventListener("click", () => {
           event.prompt();
@@ -53,17 +53,22 @@ export default function Home() {
           id="install-banner"
           className="fixed bottom-0 left-0 w-full bg-blue-700 text-white p-2 text-center cursor-pointer flex items-center justify-center"
           style={{
-            backgroundColor: "#00509e", // Cambiar a un tono más oscuro
+            backgroundColor: "#00509e",
             color: "white",
             padding: "10px",
             textAlign: "center",
             cursor: "pointer",
             zIndex: "1000",
-            transition: "opacity 0.5s", // Agregar transición de opacidad
-            opacity: "0", // Inicialmente oculto
+            transition: "opacity 0.5s",
+            opacity: "0",
           }}
         >
-          <img src="/logosbox.png" alt="Logo SBox" className="w-6 h-6 mr-2" />
+          <img
+            src="/logosbox.png"
+            alt="Logo SBox"
+            className="w-6 h-6 mr-2"
+            style={{ alignSelf: "center" }} // Añadir esta línea
+          />
           Instalar la aplicación
         </div>
       </main>
