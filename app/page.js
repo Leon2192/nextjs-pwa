@@ -1,4 +1,4 @@
-"use client";
+'use client'
 import Head from "next/head";
 import Landing from "./components/Landing";
 import { useEffect } from "react";
