@@ -4,8 +4,8 @@ import { Inter } from 'next/font/google'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata = {
-  title: 'Next PWA',
-  description: 'Next js PWA',
+  title: 'Solution Group - Solution Box ',
+  description: 'Mayorista de informatica y telecomunicaciones',
   manifest: '/manifest.json',
   icons: { apple: "/apple-touch-icon.png" },
   themeColor: '#000000'
