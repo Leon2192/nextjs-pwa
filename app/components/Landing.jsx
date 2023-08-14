@@ -1,17 +1,12 @@
-"use client";
-
 import countriesData from "../db/countries.json";
 
 export default function Landing() {
   const countries = countriesData.countries;
 
   return (
-    <div
-      className="min-h-screen bg-blue-900"
-      style={{ backgroundColor: "#2f3e46" }}
-    >
+    <div className="min-h-screen bg-blue-900" style={{ backgroundColor: "#2f3e46" }}>
       <div className="max-w-7xl mx-auto p-8 flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-8">
-        <div className="sm:flex-1 text-white flex justify-center items-center">
+        <div className="sm:w-1/2 text-white flex justify-center items-center">
           <div>
             <h1 className="text-4xl sm:text-5xl font-bold mb-2">
               <span className="text-blue-300">Bienvenidos a</span>{" "}
@@ -27,14 +22,14 @@ export default function Landing() {
               internacionales como AMD, DELL, INTEL, HUAWEI, CISCO, HP, SAMSUNG,
               entre otras.
             </h3>
-            <div className="flex mt-4">
+            <div className="hidden sm:flex mt-4">
               {countries.map((country) => (
                 <div
                   key={country.name}
                   className="w-8 h-8 bg-white rounded-full flex items-center justify-center mx-1"
                 >
                   <img
-                    src={`/flags/${country.name.toLowerCase()}.png`}
+                    src={country.avatar}
                     alt={country.name}
                     className="w-5 h-5"
                   />
@@ -43,7 +38,7 @@ export default function Landing() {
             </div>
           </div>
         </div>
-        <div className="sm:flex-1 flex flex-col justify-center items-center">
+        <div className="sm:w-1/2 flex flex-col justify-center items-center">
           <div className="bg-white p-6 rounded-md text-center shadow-md w-full sm:max-w-md">
             <div className="w-32 h-32 bg-gray-300 rounded-full flex items-center justify-center mx-auto mb-4">
               <img
@@ -72,11 +67,7 @@ export default function Landing() {
                 </svg>
               </div>
             </div>
-            <a
-              href={countries[0].url}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
+            <a href={countries[0].url} target="_blank" rel="noopener noreferrer">
               <button
                 className="mt-4 bg-red-600 hover:bg-red-700 text-white px-8 py-2 rounded-md w-full"
                 style={{ backgroundColor: "#fe5f55" }}
@@ -86,6 +77,24 @@ export default function Landing() {
             </a>
           </div>
         </div>
+      </div>
+      <div className="sm:hidden mt-4 flex justify-center">
+        {countries.map((country) => (
+          <div
+            key={country.name}
+            className="w-8 h-8 bg-white rounded-full flex items-center justify-center mx-1"
+            style={{
+              borderRadius: "50%",
+              overflow: "hidden",
+            }}
+          >
+            <img
+              src={country.avatar}
+              alt={country.name}
+              className="w-full h-full"
+            />
+          </div>
+        ))}
       </div>
     </div>
   );
